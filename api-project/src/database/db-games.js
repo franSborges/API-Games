@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 
-const connection = new Sequelize('confidential', 'confidential', 'confidential', {
+const connection = new Sequelize('', '', '', {
   host: 'localhost',
   dialect: 'mysql'
 })
