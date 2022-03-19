@@ -14,7 +14,7 @@ const Game = connection.define('games', {
   price: {
     type: Sequelize.DOUBLE,
     allowNull: false
-  }
+  },
 });
 
 Game.sync({ force: false }).then(() => console.log("connected"));
