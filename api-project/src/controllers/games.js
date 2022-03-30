@@ -4,7 +4,6 @@ const listGames = async (req, res) => {
   try {
     const game = await Game.findAll({raw: true});
     res.status(200).json(game);
-
   } catch (err) {
     res.status(500).json({ error: err });
   }
@@ -14,18 +13,18 @@ const getGameById =  async (req, res) => {
   const { id } = req.params;
 
   if (isNaN(id)) {
-    return res.status(400).send("Bad Request");
+    return res.status(400).send("invalid id");
   }
 
   if (!id) {
-    return res.status(403).send("Forbidden");
+    return res.status(403).send("the id field is mandatory");
   }
 
   try {
     const game = await Game.findOne({ where: { id: id }});
     
   if (!game) {
-    return res.status(404).send("Not Found");
+    return res.status(404).send("game not found");
     }
 
     return res.status(200).json(game);
@@ -62,15 +61,15 @@ const deleteGame = async (req, res) => {
   const game = await Game.findOne({ where: { id: id } });
 
   if (!id) {
-    return res.status(403).send("Forbidden");
+    return res.status(403).send("the id field is mandatory");
   }
   
   if (isNaN(id)) {
-    return res.status(400).send("Bad Request");
+    return res.status(400).send("invalid id");
   }
 
   if(!game) {
-    return res.status(404).send("Not Found");
+    return res.status(404).send("Game not found");
   }
   
   try {
@@ -87,11 +86,11 @@ const updateGame = async (req, res) => {
   const { name, price, year_release } = req.body;
   
   if (!id) {
-    return res.status(403).send("Forbidden");
+    return res.status(403).send("the id field is mandator");
   }
 
   if (isNaN(id)) {
-    return res.status(400).send("Bad Request");
+    return res.status(400).send("invalid id");
   }
 
 
@@ -106,7 +105,7 @@ const updateGame = async (req, res) => {
 
   try {
     await gameFound.save({ where: { id: id } });
-    return res.status(204).send();
+    return res.status(200).send("User successfully updated");
 
   } catch (err) {
     res.status(500).json({ error: err });
